@@ -4,10 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Jordan/AndroidStudioProjects/Lens/app/src/main/res/drawable/ic__image.xml" value="0.2735" />
+        <entry key="..\:/Users/Jordan/AndroidStudioProjects/Lens/app/src/main/res/drawable/ic_arrow_down.xml" value="0.2735" />
         <entry key="..\:/Users/Jordan/AndroidStudioProjects/Lens/app/src/main/res/drawable/ic_flash_off.xml" value="0.2735" />
+        <entry key="..\:/Users/Jordan/AndroidStudioProjects/Lens/app/src/main/res/drawable/ic_flip_camera.xml" value="0.2735" />
         <entry key="..\:/Users/Jordan/AndroidStudioProjects/Lens/app/src/main/res/drawable/ic_search.xml" value="0.2735" />
+        <entry key="..\:/Users/Jordan/AndroidStudioProjects/Lens/app/src/main/res/drawable/transparent_bg.xml" value="0.236" />
         <entry key="..\:/Users/Jordan/AndroidStudioProjects/Lens/app/src/main/res/layout/activity_main.xml" value="0.12239583333333333" />
+        <entry key="..\:/Users/Jordan/AndroidStudioProjects/Lens/app/src/main/res/layout/bottom_sheet_layout.xml" value="0.26875" />
         <entry key="..\:/Users/Jordan/AndroidStudioProjects/Lens/app/src/main/res/layout/fragment_capture.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Jordan/AndroidStudioProjects/Lens/app/src/main/res/layout/fragment_result.xml" value="0.26875" />
+        <entry key="..\:/Users/Jordan/AndroidStudioProjects/Lens/app/src/main/res/layout/image_item.xml" value="0.26875" />
         <entry key="..\:/Users/Jordan/AndroidStudioProjects/Lens/app/src/main/res/menu/main_menu.xml" value="0.2015625" />
       </map>
     </option>

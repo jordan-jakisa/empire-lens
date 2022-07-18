@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-    tools:context=".ui.imageCapture.ResultFragment">
+    tools:context=".ResultFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,17 +31,11 @@
                     android:id="@+id/copy_chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Copy"
+                    android:text="@string/copy"
                     app:chipIcon="@drawable/ic_content_copy"/>
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/save_chip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Save"
-                    app:chipIcon="@drawable/ic_save_alt"/>
-                <com.google.android.material.chip.Chip
                     android:id="@+id/share_chip"
-                    android:text="Share"
+                    android:text="@string/share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:chipIcon="@drawable/ic_share"/>

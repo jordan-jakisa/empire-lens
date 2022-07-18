@@ -6,4 +6,7 @@
     <string name="tap_button_to_capture_and_start_extracting_text">Tap Button to capture and start extracting text</string>
     <string name="gallery">Gallery</string>
     <string name="result">Result</string>
+    <string name="processing_image">Processing Image</string>
+    <string name="copy">Copy</string>
+    <string name="share">Share</string>
 </resources>

@@ -84,7 +84,7 @@ class CaptureFragment : Fragment(){
         }
         binding.toolbar.title = SpannableStringBuilder().let {
             it.append("Empire")
-            it.color(ContextCompat.getColor(safeContext, R.color.purple_500)) {
+            it.color(ContextCompat.getColor(safeContext, R.color.primary_color)) {
                 append(" Lens")
             }
         }

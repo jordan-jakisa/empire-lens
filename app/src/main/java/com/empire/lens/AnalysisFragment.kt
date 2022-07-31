@@ -9,6 +9,7 @@ import androidx.core.net.toUri
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.empire.lens.databinding.FragmentAnalysisBinding
+import com.google.android.gms.ads.AdRequest
 
 class AnalysisFragment : Fragment() {
     private lateinit var binding: FragmentAnalysisBinding
@@ -20,6 +21,7 @@ class AnalysisFragment : Fragment() {
         binding = FragmentAnalysisBinding.inflate(layoutInflater)
         binding.toolbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
         Glide.with(requireContext()).load(args.imageUri.toUri()).into(binding.imageView)
+        binding.bannerAd.loadAd(AdRequest.Builder().build())
         return binding.root
     }
 }

@@ -1,5 +1,6 @@
 package com.empire.lens
 
+import android.app.Activity
 import android.content.Context
 import android.hardware.camera2.CameraManager
 import android.net.Uri
@@ -22,6 +23,10 @@ import androidx.core.text.color
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import com.empire.lens.databinding.FragmentCaptureBinding
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.common.util.concurrent.ListenableFuture
 import java.io.File
 import java.util.concurrent.ExecutorService
@@ -35,8 +40,9 @@ class CaptureFragment : Fragment(){
     private var imageCapture: ImageCapture? = null
     private lateinit var imageCaptureExecutor: ExecutorService
     private var flashStatus = false
-    private lateinit var imageUri: Uri
+    private var imageUri: Uri? = null
     private lateinit var safeContext: Context
+    private var mInterstitialAd: InterstitialAd? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +50,17 @@ class CaptureFragment : Fragment(){
     ): View {
         binding = FragmentCaptureBinding.inflate(layoutInflater)
         initViews()
+        InterstitialAd.load(requireContext(),binding.processingView.context.getString(R.string.interstitial_ad_id), AdRequest.Builder().build(), object : InterstitialAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Log.d(TAG, adError?.toString())
+                mInterstitialAd = null
+            }
+
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                Log.d(TAG, "Ad Loaded")
+                mInterstitialAd = interstitialAd
+            }
+        })
         return binding.root
     }
 
@@ -55,7 +72,7 @@ class CaptureFragment : Fragment(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
+        cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
         cameraProvideResult.launch(android.Manifest.permission.CAMERA)
         cameraProviderFeature = ProcessCameraProvider.getInstance(requireContext())
         cameraProviderFeature.get()
@@ -63,6 +80,7 @@ class CaptureFragment : Fragment(){
     }
 
     private fun initViews() {
+        binding.bannerAd.loadAd(AdRequest.Builder().build())
         binding.toolbar.setNavigationOnClickListener {
             val cameraManager = context?.getSystemService(Context.CAMERA_SERVICE) as CameraManager
             val cameraId = cameraManager.cameraIdList[0]
@@ -120,8 +138,14 @@ class CaptureFragment : Fragment(){
 
     private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()){ uri: Uri ->
         imageUri = uri
-        methodUtils.analyzeImage(imageUri, binding.processingView)
-        methodUtils.openLocalAnalysisFragment(imageUri)
+        if (mInterstitialAd != null) {
+            mInterstitialAd?.show(requireContext() as Activity)
+            Log.d("TAG", "The interstitial ad shown.")
+        } else {
+            Log.d("TAG", "The interstitial ad wasn't ready yet.")
+        }
+        methodUtils.analyzeImage(imageUri!!, binding.processingView)
+        methodUtils.openLocalAnalysisFragment(imageUri!!)
     }
 
     private fun startCamera() {
@@ -144,7 +168,6 @@ class CaptureFragment : Fragment(){
                 Log.d(TAG, "Error binding to lifecycle. Reason: $e")
             }
         }, ContextCompat.getMainExecutor(safeContext))
-
     }
 
     private fun takePhoto() {

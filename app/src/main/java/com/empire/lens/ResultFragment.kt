@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.empire.lens.databinding.FragmentResultBinding
+import com.google.android.gms.ads.AdRequest
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class ResultFragment(private val text: String) : BottomSheetDialogFragment() {
@@ -18,13 +19,14 @@ class ResultFragment(private val text: String) : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentResultBinding.inflate(layoutInflater)
         initViews()
         return binding.root
     }
 
     private fun initViews() {
+        binding.bannerAd.loadAd(AdRequest.Builder().build())
         binding.resultText.setText(text)
         binding.shareChip.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND).apply {

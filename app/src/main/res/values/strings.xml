@@ -9,4 +9,7 @@
     <string name="processing_image">Processing Image</string>
     <string name="copy">Copy</string>
     <string name="share">Share</string>
+
+    <string name="banner_ad_id">ca-app-pub-4072395437556231/2488973831</string>
+    <string name="interstitial_ad_id">ca-app-pub-4072395437556231/6928564683</string>
 </resources>

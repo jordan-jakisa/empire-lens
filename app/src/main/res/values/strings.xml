@@ -12,4 +12,15 @@
 
     <string name="banner_ad_id">ca-app-pub-4072395437556231/2488973831</string>
     <string name="interstitial_ad_id">ca-app-pub-4072395437556231/6928564683</string>
+    <string name="info">Info</string>
+    <string name="developed_and_designed_by">Developed and designed by</string>
+    <string name="jordan_mungujakisa">Jordan Mungujakisa</string>
+    <string name="connect_on_twitter">Connect on twitter</string>
+    <string name="connect_on_linkedin">Connect on linkedin</string>
+    <string name="connect_on_github">Connect on github</string>
+    <string name="send_me_an_email">Send me an email</string>
+    <string name="support">Support</string>
+    <string name="changelog">Changelog</string>
+    <string name="donate">Donate</string>
+    <string name="feedback">Feedback</string>
 </resources>

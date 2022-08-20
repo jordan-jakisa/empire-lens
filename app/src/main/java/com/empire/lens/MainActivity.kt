@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
@@ -59,5 +60,9 @@ class MainActivity : AppCompatActivity(), MethodUtils {
         } else {
             findNavController(R.id.nav_host_fragment).navigate(CaptureFragmentDirections.actionCaptureFragmentToAnalysisFragment(uri.toString()))
         }
+    }
+
+    override fun fragmentTransaction(navDirections: NavDirections) {
+        findNavController(R.id.nav_host_fragment).navigate(navDirections)
     }
 }

@@ -9,9 +9,11 @@ import android.os.Environment
 import android.text.SpannableStringBuilder
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.camera.core.*
@@ -36,7 +38,6 @@ class CaptureFragment : Fragment(){
     private var imageCapture: ImageCapture? = null
     private lateinit var imageCaptureExecutor: ExecutorService
     private var flashStatus = false
-//    private var imageUri: Uri? = null
     private lateinit var safeContext: Context
 
     override fun onCreateView(
@@ -71,15 +72,23 @@ class CaptureFragment : Fragment(){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (cameraId != null) {
                     if (flashStatus) {
-                        cameraManager.setTorchMode(cameraId, true)
-                        binding.toolbar.navigationIcon =
-                            AppCompatResources.getDrawable(safeContext, R.drawable.ic_flash_on)
-                        flashStatus = false
+                        try {
+                            cameraManager.setTorchMode(cameraId, true)
+                            binding.toolbar.navigationIcon =
+                                AppCompatResources.getDrawable(safeContext, R.drawable.ic_flash_on)
+                            flashStatus = false
+                        } catch (e: Exception){
+                            Log.d(tag, "Exception: $e")
+                        }
                     } else {
-                        cameraManager.setTorchMode(cameraId, false)
-                        binding.toolbar.navigationIcon =
-                            AppCompatResources.getDrawable(safeContext, R.drawable.ic_flash_off)
-                        flashStatus = false
+                        try {
+                            cameraManager.setTorchMode(cameraId, false)
+                            binding.toolbar.navigationIcon =
+                                AppCompatResources.getDrawable(safeContext, R.drawable.ic_flash_off)
+                            flashStatus = true
+                        } catch (e: Exception){
+                            Log.d(tag, "Exception: $e")
+                        }
                     }
                 } else Toast.makeText(context, "Flash not available", Toast.LENGTH_SHORT).show()
             }
@@ -100,6 +109,18 @@ class CaptureFragment : Fragment(){
             startCamera()
         }
         binding.captureButton.setOnClickListener { takePhoto() }
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            when (item?.itemId) {
+                R.id.settings -> {
+                    true
+                }
+                R.id.about -> {
+                    methodUtils.fragmentTransaction(CaptureFragmentDirections.actionCaptureFragmentToAboutFragment())
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private val cameraProvideResult =

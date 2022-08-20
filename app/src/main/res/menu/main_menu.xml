@@ -4,5 +4,8 @@
     <item android:id="@+id/settings"
         android:title="@string/settings"
         app:showAsAction="never"/>
-
+    <item android:id="@+id/about"
+        android:title="@string/info"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_info"/>
 </menu>

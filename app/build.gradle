@@ -2,8 +2,10 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs.kotlin'
-
+    id 'com.google.gms.google-services'
 }
+
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdk 32
@@ -12,8 +14,8 @@ android {
         applicationId "com.empire.lens"
         minSdk 21
         targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,6 +39,11 @@ android {
 }
 
 dependencies {
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:30.3.2')
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
@@ -61,7 +68,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     //ads
     implementation 'com.google.android.gms:play-services-ads:21.1.0'
-
 
     //text recognition
     implementation 'com.google.android.gms:play-services-mlkit-text-recognition:18.0.0'

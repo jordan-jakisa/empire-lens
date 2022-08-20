@@ -1,6 +1,5 @@
 package com.empire.lens
 
-import android.app.Activity
 import android.content.Context
 import android.hardware.camera2.CameraManager
 import android.net.Uri
@@ -24,9 +23,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import com.empire.lens.databinding.FragmentCaptureBinding
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.common.util.concurrent.ListenableFuture
 import java.io.File
 import java.util.concurrent.ExecutorService
@@ -40,9 +36,8 @@ class CaptureFragment : Fragment(){
     private var imageCapture: ImageCapture? = null
     private lateinit var imageCaptureExecutor: ExecutorService
     private var flashStatus = false
-    private var imageUri: Uri? = null
+//    private var imageUri: Uri? = null
     private lateinit var safeContext: Context
-    private var mInterstitialAd: InterstitialAd? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,17 +45,6 @@ class CaptureFragment : Fragment(){
     ): View {
         binding = FragmentCaptureBinding.inflate(layoutInflater)
         initViews()
-        InterstitialAd.load(requireContext(),binding.processingView.context.getString(R.string.interstitial_ad_id), AdRequest.Builder().build(), object : InterstitialAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                Log.d(TAG, adError?.toString())
-                mInterstitialAd = null
-            }
-
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                Log.d(TAG, "Ad Loaded")
-                mInterstitialAd = interstitialAd
-            }
-        })
         return binding.root
     }
 
@@ -136,16 +120,11 @@ class CaptureFragment : Fragment(){
         startCamera()
     }
 
-    private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()){ uri: Uri ->
-        imageUri = uri
-        if (mInterstitialAd != null) {
-            mInterstitialAd?.show(requireContext() as Activity)
-            Log.d("TAG", "The interstitial ad shown.")
-        } else {
-            Log.d("TAG", "The interstitial ad wasn't ready yet.")
+    private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()){ uri: Uri? ->
+        if (uri != null) {
+            methodUtils.analyzeImage(uri, binding.processingView)
+            methodUtils.openLocalAnalysisFragment(uri)
         }
-        methodUtils.analyzeImage(imageUri!!, binding.processingView)
-        methodUtils.openLocalAnalysisFragment(imageUri!!)
     }
 
     private fun startCamera() {
@@ -187,7 +166,6 @@ class CaptureFragment : Fragment(){
                     }
                     override fun onError(exception: ImageCaptureException) {
                     }
-
                 })
         }
     }

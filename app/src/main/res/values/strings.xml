@@ -12,6 +12,7 @@
 
     <string name="banner_ad_id">ca-app-pub-4072395437556231/2488973831</string>
     <string name="interstitial_ad_id">ca-app-pub-4072395437556231/6928564683</string>
+    <string name="rewarded_interstitial_ad_id">ca-app-pub-4072395437556231/4797178254</string>
     <string name="info">Info</string>
     <string name="developed_and_designed_by">Developed and designed by</string>
     <string name="jordan_mungujakisa">Jordan Mungujakisa</string>

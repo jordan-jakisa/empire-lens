@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity(), MethodUtils {
     private fun loadAd() {
         Log.d(TAG, "loadAd() called. Count: $count")
         count++
-        RewardedInterstitialAd.load(this, applicationContext.getString(R.string.interstitial_ad_id),
+        RewardedInterstitialAd.load(this, applicationContext.getString(R.string.rewarded_interstitial_ad_id),
             adRequest, object : RewardedInterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
                     mInterstitialAd = null

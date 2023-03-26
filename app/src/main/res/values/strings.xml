@@ -10,6 +10,8 @@
     <string name="copy">Copy</string>
     <string name="share">Share</string>
 
+    <string name="test_interstitial">ca-app-pub-3940256099942544/5354046379</string>
+
     <string name="banner_ad_id">ca-app-pub-4072395437556231/2488973831</string>
     <string name="interstitial_ad_id">ca-app-pub-4072395437556231/6928564683</string>
     <string name="rewarded_interstitial_ad_id">ca-app-pub-4072395437556231/4797178254</string>

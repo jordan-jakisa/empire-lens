@@ -1,6 +1,7 @@
 package com.empire.lens
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.hardware.camera2.CameraManager
 import android.net.Uri
 import android.os.Build
@@ -66,33 +67,35 @@ class CaptureFragment : Fragment(){
 
     private fun initViews() {
         binding.bannerAd.loadAd(AdRequest.Builder().build())
+
+        //todo: check this new code
         binding.toolbar.setNavigationOnClickListener {
-            val cameraManager = context?.getSystemService(Context.CAMERA_SERVICE) as CameraManager
-            val cameraId = cameraManager.cameraIdList[0]
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (cameraId != null) {
-                    if (flashStatus) {
-                        try {
-                            cameraManager.setTorchMode(cameraId, true)
-                            binding.toolbar.navigationIcon =
-                                AppCompatResources.getDrawable(safeContext, R.drawable.ic_flash_on)
-                            flashStatus = false
-                        } catch (e: Exception){
-                            Log.d(tag, "Exception: $e")
-                        }
-                    } else {
-                        try {
-                            cameraManager.setTorchMode(cameraId, false)
-                            binding.toolbar.navigationIcon =
-                                AppCompatResources.getDrawable(safeContext, R.drawable.ic_flash_off)
-                            flashStatus = true
-                        } catch (e: Exception){
-                            Log.d(tag, "Exception: $e")
+            if (context?.packageManager?.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH) == true) {
+                try {
+                    val cameraManager = requireContext().getSystemService(Context.CAMERA_SERVICE) as CameraManager
+                    val cameraId = cameraManager.cameraIdList[0]
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (cameraId != null) {
+                            val newFlashStatus = !flashStatus
+                            cameraManager.setTorchMode(cameraId, newFlashStatus)
+
+                            flashStatus = newFlashStatus
+                            val flashIcon = if (flashStatus) R.drawable.ic_flash_on else R.drawable.ic_flash_off
+                            binding.toolbar.navigationIcon = AppCompatResources.getDrawable(requireContext(), flashIcon)
+                        } else {
+                            Toast.makeText(context, "Flash not available", Toast.LENGTH_SHORT).show()
                         }
                     }
-                } else Toast.makeText(context, "Flash not available", Toast.LENGTH_SHORT).show()
+                } catch (e: Exception) {
+                    Log.e("flashtest", "Unable to control flashlight. Exception: $e")
+                    Toast.makeText(context, "Unable to control flashlight $e", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(context, "Flashlight not available on this device", Toast.LENGTH_SHORT).show()
             }
         }
+
         binding.toolbar.title = SpannableStringBuilder().let {
             it.append("Empire")
             it.color(ContextCompat.getColor(safeContext, R.color.primary_color)) {

@@ -89,7 +89,7 @@ class CaptureFragment : Fragment(){
                     }
                 } catch (e: Exception) {
                     Log.e("flashtest", "Unable to control flashlight. Exception: $e")
-                    Toast.makeText(context, "Unable to control flashlight $e", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Unable to control flashlight", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Toast.makeText(context, "Flashlight not available on this device", Toast.LENGTH_SHORT).show()

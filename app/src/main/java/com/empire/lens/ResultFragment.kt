@@ -10,15 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.empire.lens.databinding.FragmentResultBinding
-import com.google.android.gms.ads.AdRequest
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class ResultFragment(private val text: String) : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentResultBinding
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentResultBinding.inflate(layoutInflater)
         initViews()
@@ -26,7 +23,6 @@ class ResultFragment(private val text: String) : BottomSheetDialogFragment() {
     }
 
     private fun initViews() {
-        binding.bannerAd.loadAd(AdRequest.Builder().build())
         binding.resultText.setText(text)
         binding.shareChip.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND).apply {
@@ -39,7 +35,8 @@ class ResultFragment(private val text: String) : BottomSheetDialogFragment() {
             }
         }
         binding.copyChip.setOnClickListener {
-            val clipBoardService = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipBoardService =
+                requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText(TAG, text)
             clipBoardService.setPrimaryClip(clip)
             Toast.makeText(requireContext(), "Copied to clipboard", Toast.LENGTH_LONG).show()

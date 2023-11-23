@@ -25,7 +25,6 @@ import androidx.core.text.color
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import com.empire.lens.databinding.FragmentCaptureBinding
-import com.google.android.gms.ads.AdRequest
 import com.google.common.util.concurrent.ListenableFuture
 import java.io.File
 import java.util.concurrent.ExecutorService
@@ -66,9 +65,6 @@ class CaptureFragment : Fragment(){
     }
 
     private fun initViews() {
-        binding.bannerAd.loadAd(AdRequest.Builder().build())
-
-        //todo: check this new code
         binding.toolbar.setNavigationOnClickListener {
             if (context?.packageManager?.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH) == true) {
                 try {
